@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "plugin-system"
+version = "0.1.0"
+description = ""
+authors = ["Faruk D."]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pluggy = "^1.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
