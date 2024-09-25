@@ -14,17 +14,22 @@ from defaults import default_plugins, default_config
 from utils.git_utils import checkout_subfolders
 from models.assesment import MainModel
 
+from inspect import isclass
+from pkgutil import iter_modules
+from pathlib import Path
+from importlib import import_module
+
 class PluginSystem:
     """
     _summary_
     """
 
-    def __init__(self, message="", code_path="./", assesment: MainModel = None, plugins=None) -> None:
+    def __init__(self, assesment: MainModel = None, message="", code_path="./", plugins=None) -> None:
         """
         _summary_
         """
         print("called PluginSystem::__init__")
-        self.get_online_plugins()
+        self.download_online_plugins()
         self.message = message
         self.code_path = code_path
         self.assesment = assesment
@@ -32,7 +37,8 @@ class PluginSystem:
         self.config = self.get_config()
         self.pm = self.get_plugin_manager(plugins)
 
-    def get_online_plugins(self):
+
+    def download_online_plugins(self):
         """_summary_
         """
         print("")
@@ -174,3 +180,35 @@ class PluginSystemSpecs:
         The last hook that runs.
         """
         pass
+
+
+def discover_extra_plugins():
+    plugin_class_list = {}
+
+    package_dir = Path("plugins/extra").resolve()
+    # print(package_dir)
+    for (_, module_name, _) in iter_modules([package_dir]):
+        # import the module and iterate through its attributes
+        module = import_module(f"plugins.extra.{module_name}")
+        for attribute_name in dir(module):
+            attribute = getattr(module, attribute_name)
+
+            if isclass(attribute):
+                # Add the class to this package's variables
+                globals()[attribute_name] = attribute
+
+                # print("    ", attribute_name, attribute)
+                plugin_class_list[attribute_name] = attribute.__module__
+
+    # print(sys.modules.keys())
+    # print("dir: ", dir())
+    # print("globals: ", globals())
+    # print("locals: ", locals())
+
+    # print(plugin_class_list)
+
+    available_plugin_classes = []
+    for class_name, module_name in plugin_class_list.items():
+        available_plugin_classes.append(getattr(import_module(module_name), class_name))
+
+    return available_plugin_classes
