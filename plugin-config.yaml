@@ -1,0 +1,11 @@
+registry:
+  - name: 'fd'
+    url: 'https://github.com/fdiblen/plugin-system'
+    branch: 'main'
+    plugins:
+      # - plugins
+      # - plugins/default.py
+      - plugins/lower.py
+      - plugins/no_decorator.py
+logging:
+  level: 'DEBUG'

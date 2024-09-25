@@ -14,14 +14,14 @@ class DefaultPlugin:
         print("    called DefaultPlugin::__init__")
         self.description = description
 
-    def configure(plugin_example):
+    def configure(resoqu):
         """_summary_
         """
         print("    called DefaultPlugin::configure")
-        plugin_example.message = plugin_example.message.upper()
+        resoqu.message = resoqu.message.upper()
 
-    def evaluate(plugin_example):
+    def evaluate(resoqu):
         """_summary_
         """
         print("    called DefaultPlugin::evaluate")
-        print(plugin_example.message)
+        print(resoqu.message)

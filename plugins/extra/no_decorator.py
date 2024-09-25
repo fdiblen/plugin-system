@@ -15,14 +15,14 @@ class NoDecoratorPlugin:
         print("    called NoDecoratorPlugin::__init__")
         self.description = description
 
-    def configure(plugin_example):
+    def configure(resoqu):
         """_summary_
         """
         print("    called NoDecoratorPlugin::configure")
-        plugin_example.message += '-'
+        resoqu.message += '-'
 
-    def evaluate(plugin_example):
+    def evaluate(resoqu):
         """_summary_
         """
         print("    called NoDecoratorPlugin::evaluate")
-        plugin_example.message += '*'
+        resoqu.message += '*'

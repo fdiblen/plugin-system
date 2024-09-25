@@ -14,9 +14,9 @@ class LowerPlugin:
         print("    called LowerPlugin::__init__")
         self.description = description
 
-    def configure(plugin_example):
+    def configure(resoqu):
         """_summary_
         """
         print("    called LowerPlugin::configure")
-        plugin_example.message = plugin_example.message.lower()
-        plugin_example.message += '!'
+        resoqu.message = resoqu.message.lower()
+        resoqu.message += '!'

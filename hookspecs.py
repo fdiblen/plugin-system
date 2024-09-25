@@ -10,6 +10,9 @@ from config import CONFIG_FILES
 from constants import PROJECT_NAME, hook_spec, hook_impl
 from defaults import default_plugins, default_config
 
+import yaml
+from utils.git_utils import checkout_subfolders
+
 
 class PluginSystem:
     """
@@ -21,10 +24,34 @@ class PluginSystem:
         _summary_
         """
         print("called PluginSystem::__init__")
+        # self.get_plugins()
         self.message = message
         self.plugins = plugins
         self.config = self.get_config()
         self.pm = self.get_plugin_manager(plugins)
+
+    def get_plugins(self):
+        """_summary_
+        """
+        with open('plugin-config.yaml', 'r', encoding='utf-8') as file:
+            config = yaml.safe_load(file)
+
+        # print(config)
+
+        for __registry in config['registry']:
+            # print(__registry)
+
+            registry_url = __registry['url']
+            registry_name = __registry['name']
+            branch_name = __registry['branch']
+            plugin_list = __registry['plugins']
+
+            checkout_subfolders(
+                repo_url=registry_url,
+                target_folder=f"plugins/{registry_name}",
+                branch=branch_name,
+                sub_folders=plugin_list
+            )
 
     def get_config(self):
         """__summary__
@@ -90,8 +117,8 @@ class PluginSystem:
         _summary_
         """
         print("called PluginSystem::run")
-        self.pm.hook.configure(plugin_example=self)
-        self.pm.hook.evaluate(plugin_example=self)
+        self.pm.hook.configure(resoqu=self)
+        self.pm.hook.evaluate(resoqu=self)
         return self.message
 
     def list_plugins(self):
@@ -125,14 +152,14 @@ class PluginSystemSpecs:
     our users, with the kwargs that we expect to pass them.
     """
     @hook_spec
-    def configure(self, plugin_example: PluginSystem) -> None:
+    def configure(self, resoqu: PluginSystem) -> None:
         """
         The first hook that runs.
         """
         pass
 
     @hook_spec
-    def evaluate(self, plugin_example: PluginSystem) -> None:
+    def evaluate(self, resoqu: PluginSystem) -> None:
         """
         The last hook that runs.
         """
