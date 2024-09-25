@@ -23,7 +23,7 @@ def check_file_or_directory_exist(pathname) -> bool:
         #     print(f'Filename {pathname} is a directory!')
         __check_status = True
     else:
-        print(f'Filename {pathname} does not exists.')
+        print(f'    Filename {pathname} does not exists.')
 
     return __check_status
 
@@ -36,10 +36,10 @@ def move_file(source_path: str, target_path: str):
         target_path (str): _description_
     """
 
-    print(f"Moving: {source_path} --> {target_path}")
+    print(f"    Moving: {source_path} --> {target_path}")
     filename = Path(source_path).name
 
     if os.path.isfile(os.path.join(target_path, filename)):
-        print("  File exist. Skipping...")
+        print("    File exist. Skipping...")
     else:
         shutil.move(source_path, target_path)

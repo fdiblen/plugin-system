@@ -11,12 +11,17 @@ def checkout_subfolders(
     sub_folders: List[str] = []
 ):
     """Clone a repo and checkout subfolders"""
+    print("")
+    print("called git_utils::checkout_subfolders")
+    print(f"* Cloning {branch} branch of {repo_url} to {target_folder}")
 
-    print(f"* Cloning {repo_url}")
     repo = Repo.init(target_folder)
     origin = repo.create_remote("origin", repo_url)
     origin.fetch()
     git = repo.git()
+
+    # repo = Repo.clone_from(repo_url, target_folder, branch="main")
+    # git = repo.git()
 
     for __subfolder in sub_folders:
         print(f"  - Checking out {__subfolder}")
@@ -29,6 +34,7 @@ def checkout_subfolders(
 
     rmtree(f"{target_folder}/.git")
     rmtree(f"{target_folder}")
+    print("")
 
 
 if __name__ == "__main__":

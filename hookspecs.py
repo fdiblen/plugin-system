@@ -4,13 +4,13 @@
 import os
 import json
 import inspect
+import yaml
 import pluggy
 from config import CONFIG_FILES
 
 from constants import PROJECT_NAME, hook_spec, hook_impl
 from defaults import default_plugins, default_config
 
-import yaml
 from utils.git_utils import checkout_subfolders
 from models.assesment import MainModel
 
@@ -35,6 +35,7 @@ class PluginSystem:
     def get_online_plugins(self):
         """_summary_
         """
+        print("called PluginSystem::get_online_plugins")
         with open('plugin-config.yaml', 'r', encoding='utf-8') as file:
             config = yaml.safe_load(file)
 
@@ -78,6 +79,7 @@ class PluginSystem:
     def get_plugin_manager(self, plugins=None):
         """_summary_
         """
+        print("")
         print("called PluginSystem::get_plugin_manager")
         pm = pluggy.PluginManager(PROJECT_NAME)
         pm.add_hookspecs(PluginSystemSpecs)
@@ -121,7 +123,21 @@ class PluginSystem:
         print("called PluginSystem::run")
         self.pm.hook.configure(resoqu=self)
         self.pm.hook.evaluate(resoqu=self)
-        return self.message
+        return {
+            "message": self.message,
+            "code_path": self.code_path,
+            "assesment": self.assesment
+        }
+
+    def run_specified(self):
+        """ more controlled effort - quick hack as poc """
+        for func_name in self.confs['process_data_steps']:
+            # find function in module
+            for plugin_name, plugin_module in  \
+                            self.pm.list_name_plugin():
+                if func_name in dir(plugin_module):
+                    print(getattr(self.pm.get_plugin(plugin_name),
+                        func_name)(csv='passed in csv'))
 
     def list_plugins(self):
         """__summary__"""
@@ -135,16 +151,6 @@ class PluginSystem:
         print("called PluginSystem::show_config")
         print(f'    config: {self.config}')
         print()
-
-    def run_specified(self):
-        """ more controlled effort - quick hack as poc """
-        for func_name in self.confs['process_data_steps']:
-            # find function in module
-            for plugin_name, plugin_module in  \
-                            self.pm.list_name_plugin():
-                if func_name in dir(plugin_module):
-                    print(getattr(self.pm.get_plugin(plugin_name),
-                        func_name)(csv='passed in csv'))
 
 
 class PluginSystemSpecs:

@@ -55,8 +55,11 @@ def main():
 
     app.show_config()
     app.list_plugins()
-    app.run()
+    final_result = app.run()
     # app.run_specified()  # evaluate based on configs order
+
+    print("")
+    print('Result:', final_result)
 
 
 if __name__ == "__main__":
