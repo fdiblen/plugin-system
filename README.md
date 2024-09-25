@@ -1,4 +1,4 @@
-# Python Plugin System
+# ReSoQu
 
 Example code shows how to develop a Python code that can be extended with plugins.
 
