@@ -35,6 +35,7 @@ class PluginSystem:
     def get_online_plugins(self):
         """_summary_
         """
+        print("")
         print("called PluginSystem::get_online_plugins")
         with open('plugin-config.yaml', 'r', encoding='utf-8') as file:
             config = yaml.safe_load(file)
@@ -44,17 +45,18 @@ class PluginSystem:
         for __registry in config['registry']:
             # print(__registry)
 
-            registry_url = __registry['url']
-            registry_name = __registry['name']
-            branch_name = __registry['branch']
-            plugin_list = __registry['plugins']
+            if __registry['plugins']:
+                registry_url = __registry['url']
+                registry_name = __registry['name']
+                branch_name = __registry['branch']
+                plugin_list = __registry['plugins']
 
-            checkout_subfolders(
-                repo_url=registry_url,
-                target_folder=f"plugins/{registry_name}",
-                branch=branch_name,
-                sub_folders=plugin_list
-            )
+                checkout_subfolders(
+                    repo_url=registry_url,
+                    target_folder=f"plugins/{registry_name}",
+                    branch=branch_name,
+                    sub_folders=plugin_list
+                )
 
     def get_config(self):
         """__summary__
