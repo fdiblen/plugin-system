@@ -9,6 +9,7 @@ Example code shows how to develop a Python code that can be extended with plugin
 
 ## How to run
 ```shell
+pipenv install
 pipenv shell
 pipenv run python main.py
 ```
