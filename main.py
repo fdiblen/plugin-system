@@ -11,7 +11,6 @@ from pkgutil import iter_modules
 from pathlib import Path
 from importlib import import_module
 
-import sys
 
 def main():
     """_summary_
@@ -20,7 +19,7 @@ def main():
     plugin_class_list = {}
 
     package_dir = Path("plugins/extra").resolve()
-    print(package_dir)
+    # print(package_dir)
     for (_, module_name, _) in iter_modules([package_dir]):
         # import the module and iterate through its attributes
         module = import_module(f"plugins.extra.{module_name}")
@@ -31,7 +30,7 @@ def main():
                 # Add the class to this package's variables
                 globals()[attribute_name] = attribute
 
-                print("    ", attribute_name, attribute)
+                # print("    ", attribute_name, attribute)
                 plugin_class_list[attribute_name] = attribute.__module__
 
     # print(sys.modules.keys())
@@ -39,11 +38,11 @@ def main():
     # print("globals: ", globals())
     # print("locals: ", locals())
 
-    print(plugin_class_list)
+    # print(plugin_class_list)
 
-    plugin_classes = []
-    for className, moduleName in plugin_class_list.items():
-        plugin_classes.append(getattr(import_module(moduleName), className))
+    available_plugin_classes = []
+    for class_name, module_name in plugin_class_list.items():
+        available_plugin_classes.append(getattr(import_module(module_name), class_name))
 
     app = PluginSystem(
         message="hello worldS!",
@@ -51,7 +50,7 @@ def main():
         #     # LowerPlugin,
         #     # NoDecoratorPlugin,
         # ]
-        plugins=plugin_classes
+        plugins=available_plugin_classes
     )
 
     app.show_config()

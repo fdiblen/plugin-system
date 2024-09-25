@@ -12,19 +12,19 @@ from defaults import default_plugins, default_config
 
 import yaml
 from utils.git_utils import checkout_subfolders
-
+from models.assesment import MainModel
 
 class PluginSystem:
     """
     _summary_
     """
 
-    def __init__(self, message="", code_path="./", assesment={}, plugins=None) -> None:
+    def __init__(self, message="", code_path="./", assesment: MainModel = None, plugins=None) -> None:
         """
         _summary_
         """
         print("called PluginSystem::__init__")
-        self.get_plugins()
+        self.get_online_plugins()
         self.message = message
         self.code_path = code_path
         self.assesment = assesment
@@ -32,7 +32,7 @@ class PluginSystem:
         self.config = self.get_config()
         self.pm = self.get_plugin_manager(plugins)
 
-    def get_plugins(self):
+    def get_online_plugins(self):
         """_summary_
         """
         with open('plugin-config.yaml', 'r', encoding='utf-8') as file:
