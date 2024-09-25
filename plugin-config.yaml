@@ -1,10 +1,8 @@
 registry:
-  - name: 'fd'
-    url: 'https://github.com/fdiblen/plugin-system'
+  - name: 'fdiblen-github'
+    url: 'https://github.com/fdiblen/plugin-registry'
     branch: 'main'
     plugins:
-      # - plugins
-      # - plugins/default.py
       - plugins/lower.py
       - plugins/no_decorator.py
 logging:

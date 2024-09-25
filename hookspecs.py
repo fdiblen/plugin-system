@@ -24,7 +24,7 @@ class PluginSystem:
         _summary_
         """
         print("called PluginSystem::__init__")
-        # self.get_plugins()
+        self.get_plugins()
         self.message = message
         self.plugins = plugins
         self.config = self.get_config()
