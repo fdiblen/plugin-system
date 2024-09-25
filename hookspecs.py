@@ -19,13 +19,15 @@ class PluginSystem:
     _summary_
     """
 
-    def __init__(self, message="", plugins=None) -> None:
+    def __init__(self, message="", code_path="./", assesment={}, plugins=None) -> None:
         """
         _summary_
         """
         print("called PluginSystem::__init__")
         self.get_plugins()
         self.message = message
+        self.code_path = code_path
+        self.assesment = assesment
         self.plugins = plugins
         self.config = self.get_config()
         self.pm = self.get_plugin_manager(plugins)
