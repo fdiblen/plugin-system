@@ -2,22 +2,26 @@
 
 Example code shows how to develop a Python code that can be extended with plugins.
 
-## References
+## Requirements
 
-- <https://github.com/travishathaway/latz>
+- Python 3.12
+- Pipenv
 
-- <https://pluggy.readthedocs.io/en/stable/#a-complete-example>
+## How to run
+```shell
+pipenv shell
+pipenv run python main.py
+```
 
-- <https://dev.to/waylonwalker/a-minimal-pluggy-example-3mp0>
+## Plugins
 
-- <https://medium.com/@garzia.luke/developing-plugin-architecture-with-pluggy-8eb7bdba3303>
+Default plugins are in `plugins` folder.
 
-- <https://anders-innovations.medium.com/building-pluggable-python-applications-d6e0d1b71ca6>
+The application will download the online plugins described in `plugin-config.yaml` file. The online plugins will be saved in `plusings/extra` folder.
 
-- <https://waylonwalker.com/pluggy-minimal-example/>
+During the execution the application will discuver all the available plugins, register and run tem.
 
-- <https://waylonwalker.com/python-pluggable-architecture/>
+## Online Plugins
 
-- <https://kracekumar.com/post/build_plugins_with_pluggy/>
-
-- <https://python.berlin/en/latest/_downloads/a9d076c8249896c6f5bdd90e3ccfcfd9/writing-plugin-friendly-applications-in-python.pdf>
+Online plugins are stored at
+https://github.com/fdiblen/plugin-registry
